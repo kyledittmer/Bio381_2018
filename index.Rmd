@@ -2,8 +2,19 @@
 title: "Bio381_01/17/18"
 author: "Kyle Dittmer"
 date: "1/17/2018"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 ---
+install.packages("prettydoc")
+
+## Create a title
 
 **bold**
 *italics*
+
+* item 1
+* item 2
+* item 3
+ 

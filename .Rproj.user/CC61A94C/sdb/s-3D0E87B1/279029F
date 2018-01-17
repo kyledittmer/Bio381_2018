@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "---\ntitle: \"Bio381_01/17/18\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: html_document\n---\n\n**bold**\n*italics*",
+    "contents" : "---\ntitle: \"Bio381_01/17/18\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: \n  prettydoc::html_pretty:\n    theme: leonids\n    highlight: github\n---\ninstall.packages(\"prettydoc\")\n\n## Create a title\n\n**bold**\n*italics*\n\n* item 1\n* item 2\n* item 3\n ",
     "created" : 1516214043023.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3703928319",
+    "hash" : "531610771",
     "id" : "279029F",
-    "lastKnownWriteTime" : 1516215823,
-    "last_content_update" : 1516215823926,
+    "lastKnownWriteTime" : 1516216443,
+    "last_content_update" : 1516216443561,
     "path" : "~/Desktop/Comp Bio/Bio381_2018/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
