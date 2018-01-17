@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "---\ntitle: \"Bio381_01/17/18\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: html_document\n---\n\n",
+    "contents" : "---\ntitle: \"Bio381_01/17/18\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: html_document\n---\n\n**bold**\n*italics*",
     "created" : 1516214043023.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1165106378",
+    "hash" : "3703928319",
     "id" : "279029F",
-    "lastKnownWriteTime" : 1516214136,
-    "last_content_update" : 1516214136799,
+    "lastKnownWriteTime" : 1516215823,
+    "last_content_update" : 1516215823926,
     "path" : "~/Desktop/Comp Bio/Bio381_2018/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {

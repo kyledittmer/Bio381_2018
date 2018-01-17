@@ -5,3 +5,5 @@ date: "1/17/2018"
 output: html_document
 ---
 
+**bold**
+*italics*
