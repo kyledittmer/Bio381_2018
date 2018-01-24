@@ -15,7 +15,7 @@ I'm a first year Masters student studying agricultural biogeochemsitry. My resea
 
 #Homework Assignements
 ####01/24/18
-[Flowchart](ThesisFlowChart1Good.png) 
+[Flowchart](TheisFlowChartBetter.png) 
 
 [Predicted Fluxes](PredictedFluxes.pdf)
 
