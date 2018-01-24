@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "---\ntitle: \"Bio381 Dittmer\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: \n  prettydoc::html_pretty:\n    theme: leonids\n    highlight: github\n---\n<img src=\"headshot1.jpg\" width=\"200\" height=\"200\" />\n\n## Computational Biology Blog\n\nI'm a first year Masters student studying agricultural biogeochemsitry. My research focuses on utilizing a combination of best management practices (i.e., tillage, manure application/timing, and incorporating cover crops during the off season) in order to mitigate nutrient losses via greenhouse gas emissions, improve soil fertility, and increase crop yield. \n\n#Homework Assignements\n[Flowchart](ThesisFlowChart1Good.png) \n\n[Predicted Fluxes](PredictedFluxes.pdf)\n\n\n ",
+    "contents" : "---\ntitle: \"Bio381 Dittmer\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/17/2018\"\noutput: \n  prettydoc::html_pretty:\n    theme: leonids\n    highlight: github\n---\n<img src=\"headshot1.jpg\" width=\"200\" height=\"200\" />\n\n## Computational Biology Blog\n\nI'm a first year Masters student studying agricultural biogeochemsitry. My research focuses on utilizing a combination of best management practices (i.e., tillage, manure application/timing, and incorporating cover crops during the off season) in order to mitigate nutrient losses via greenhouse gas emissions, improve soil fertility, and increase crop yield. \n\n#Homework Assignements\n####01/24/18\n[Flowchart](ThesisFlowChart1Good.png) \n\n[Predicted Fluxes](PredictedFluxes.pdf)\n\n\n ",
     "created" : 1516214043023.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1211727245",
+    "hash" : "611310383",
     "id" : "279029F",
-    "lastKnownWriteTime" : 1516826091,
-    "last_content_update" : 1516826091422,
+    "lastKnownWriteTime" : 1516826315,
+    "last_content_update" : 1516826315957,
     "path" : "~/Desktop/Comp Bio/Bio381_2018/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
