@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Homework 2\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/24/2018\"\noutput: html_document\n---\n\n![](ThesisFlowChart1.png)  \nFirst Flow Chart   \n![]placeholder   \nSecond Flow Chart\n",
+    "created" : 1516822409234.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2817089691",
+    "id" : "D86126E8",
+    "lastKnownWriteTime" : 1516822956,
+    "last_content_update" : 1516822956802,
+    "path" : "~/Desktop/Comp Bio/Bio381_2018/Homework2.Rmd",
+    "project_path" : "Homework2.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
