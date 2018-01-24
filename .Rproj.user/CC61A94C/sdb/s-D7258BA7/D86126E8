@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "---\ntitle: \"Homework 2\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/24/2018\"\noutput: html_document\n---\n\n![](ThesisFlowChart1.png)  \nFirst Flow Chart   \n![]placeholder   \nSecond Flow Chart\n",
+    "contents" : "---\ntitle: \"Homework 2\"\nauthor: \"Kyle Dittmer\"\ndate: \"1/24/2018\"\noutput: html_document\n---\n\n![](ThesisFlowChart1Good.png)  \nFlow Chart   \n![](PredictedFluxes.pdf) \nPredicted Nitrogen fluxes per best managment practice \n",
     "created" : 1516822409234.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2817089691",
+    "hash" : "1313268071",
     "id" : "D86126E8",
-    "lastKnownWriteTime" : 1516822956,
-    "last_content_update" : 1516822956802,
+    "lastKnownWriteTime" : 1516825842,
+    "last_content_update" : 1516825842217,
     "path" : "~/Desktop/Comp Bio/Bio381_2018/Homework2.Rmd",
     "project_path" : "Homework2.Rmd",
     "properties" : {

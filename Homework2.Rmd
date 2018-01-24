@@ -5,7 +5,7 @@ date: "1/24/2018"
 output: html_document
 ---
 
-![](ThesisFlowChart1.png)  
-First Flow Chart   
-![]placeholder   
-Second Flow Chart
+![](ThesisFlowChart1Good.png)  
+Flow Chart   
+![](PredictedFluxes.pdf) 
+Predicted Nitrogen fluxes per best managment practice 
