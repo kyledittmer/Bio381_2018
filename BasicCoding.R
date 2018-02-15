@@ -236,3 +236,36 @@ z[c("b","d","e")]
 q<- seq_len(100)
 q[q%%9==0]
 
+# ------ 02/08/18-------------------------------
+
+3<4
+3>5:7
+3==4 # equals 
+3=4 #gives an error 
+3 !=4  #does not equal 
+
+#set operators 
+# compare two atomic vector and return one atomic vector 
+# will always strip out duplicate elements before the comparison 
+
+i <- c(1,1:7)
+print(i)
+j <- 3:10 
+print(j) 
+union(i,j) #all of the elements  
+intersect(i,j) #common elements
+setdiff(i,j) # uniquue elements of i not in j 
+setdiff(j,i) # uniquie elements of j not in i
+
+#set operators that return a signle boolean
+setequal(i,j) #are the two vectors identical?
+setequal(i,i)
+is.element(i,j) #compare elements in i to j
+is.element(j,i)
+i %in% j # are elements in i also in j? 
+
+#logical operators 
+z <- 10:20
+z < 15
+z < 20 & z > 17 # AND operator 
+z < 20 | z >17 # OR operator 
