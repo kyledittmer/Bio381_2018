@@ -1,0 +1,100 @@
+---
+title: "Homework 5"
+author: "Kyle Dittmer"
+date: "2/14/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Question 1: The primary reason for using Excel to set up data frames is that people like to have the columns aligned. However, if there are not too many columns, it may be faster to do the job in a plain text editor first and align the columns with tabs. In your text editor, type in (or copy and paste from here) the following lines of text:
+```
+First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124
+
+FIND: \s{2,} # find two or more spaces after a character
+REPLACE: , # replace spaces by seperating with a comma
+
+First String,Second,1.2,3.4
+Third,x3,124
+```
+
+
+
+Question 2: A True Regex Story. I am preparing a collaborative NSF grant with a colleague at another university. One of the pieces of an NSF grant is a listing of potential conflicts of interest. NSF wants to know the first and last name of the collaborator and their institution.
+```
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+
+FIND: (\w+), (\w+), (.*)
+REPLACE: \2 \1 (\3)
+
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+```
+
+
+
+Question 3a: A Second True Regex Story. A few weeks ago, at Radio Bean’s Sunday afternoon old-time music session, one of the mandolin players gave me a DVD with over 1000 historic recordings of old-time fiddle tunes.The list of tunes (shown here as a single line of text) looks like this:
+```
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+
+FIND: mp3 
+REPLACE: mp3\n
+  
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+```
+
+Question 3b: Now write a regular expression to grab the four digit number and put it at the end of the title:
+```
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+
+FIND: (\d{4}) (.*)(\.mp3)
+REPLACE: \2_\1\3
+  
+Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3
+```
+
+Question 4: Here is a data frame with genus, species, and two numeric variables.
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+#Write a single regular expression to rearrange the data set like this:
+
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+
+FIND: (\w),(\w+),(\w+),.+,(.+)
+REPLACE: \1_\3,\4
+```
+
+Beginning with the original expression, rearrange it to abbreviate the species name like this:
+```
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+
+FIND: (\w)(\w+),(\w{4})(\w+),(.+),(\d{1,2})
+REPLACE: \1_\3,\6
+```
+
