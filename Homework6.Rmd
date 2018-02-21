@@ -1,0 +1,116 @@
+---
+title: "Homework 6"
+author: "Kyle Dittmer"
+date: "2/21/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+```
+
+Reading in my data (crop yield per BMP)
+```{r}
+z <- read.table("BIO381_data.csv",header=TRUE,sep=",", stringsAsFactors=FALSE)
+str(z)
+summary(z)
+```
+
+Checking what the data looks like 
+```{r}
+p1 <- ggplot(data=z, aes(x=yld35tac, y=..density..)) + geom_histogram(color="grey60",fill="cornsilk",size=0.2)
+print(p1)
+```
+
+Adding empirical density curve
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+```
+
+Get maximum likelihood parameters for normal
+```{r}
+normPars <- fitdistr(z$yld35tac,"normal")
+print(normPars) # gives mean and standard deviation
+str(normPars)
+normPars$estimate["mean"] # easier way to get the mean value
+```
+
+
+Plot normal probability density
+```{r}
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$yld35tac),len=length(z$yld35tac))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$yld35tac), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+```
+
+Plotting with exponential function
+```{r}
+expoPars <- fitdistr(z$yld35tac,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$yld35tac), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+
+Plotting uniform probability denisty 
+```{r}
+stat3 <- stat_function(aes(x = yld35tac, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$yld35tac), args = list(min=min(z$yld35tac), max=max(z$yld35tac)))
+ p1 + stat + stat2 + stat3
+```
+
+Plotting gamma probability density
+```{r}
+gammaPars <- fitdistr(z$yld35tac,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="goldenrod", n = length(z$yld35tac), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+
+Plotting beta probability density
+```{r}
+pSpecial <- ggplot(data=z, aes(x=yld35tac/(max(yld35tac + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$yld35tac/max(z$yld35tac + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = yld35tac, y = ..y..), fun = dbeta, colour="orchid", n = length(z$yld35tac), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+Finding the best fit distibution
+```{r}
+normPars$loglik # -93.52484
+gammaPars$loglik # -93.76825
+# Normal wins!
+```
+
+
+Simulating my data based on a normal distribution
+```{r}
+print(stat)
+length(z$yld35tac)
+simNorm <- as.data.frame(rnorm(n=41,mean= 21.4192438914634, sd=2.3682588855803))
+
+names(simNorm) <- "yld35tac"
+
+p2 <- ggplot(data = simNorm, aes(x=yld35tac,y=..density..)) + geom_histogram(color="grey60",fill="cornsilk",size=0.2)
+
+p2 + stat
+```
+
