@@ -1,0 +1,106 @@
+---
+title: "Homework 7 and 8"
+author: "Kyle Dittmer"
+date: "2/28/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+library(ggplot2)
+library(reshape2)
+```
+
+1) Go back to your “thinking on paper” exercise, and decide on a pattern that you might expect in your experiment if a specific hypothesis were true.
+  Crop yield will follow a normal distrubition for each no-till (NT) and vertical till (VT). I'll be plotting VT and NT on the x-axis as categorical variables and crop yeild (tons/acre) on the y-axis as a continious variable.
+  
+2) To start simply, assume that the data in each of your treatment groups follow a normal distribution. Specify the sample sizes, means, and variances for each group that would be reasonable if your hypothesis were true.
+```{r}
+NTyieldnorm <- rnorm(n=50, mean=30, sd=4)
+CTyieldnorm <- rnorm(n=50, mean=20, sd=4)
+```
+
+3) Using the methods we have covered in class, write a simple function to create a random data set that has these attributes. Organize these data into a data frame with the appropriate structure.
+```{r}
+# this is creating the function and data frame that will be called on to change other parameteres in the model 
+dataCreate <- function(n1=50,m1=30,sd1=4,n2=50,m2=20,sd2=5){
+  NTyield <- rnorm(n=n1, mean=m1, sd=sd1)
+  CTyield <- rnorm(n=n2, mean=m2, sd=sd2)
+  data1 <- data.frame(NTyield,CTyield)
+  return(data1)
+}
+myNormYield <-dataCreate(m1=35) # the purpose of creating a function is so you are able to change just one portion, such as what I did in line 29 
+dataCreate()
+head(myNormYield)
+
+myDF <- dataCreate() # changing the name of dataCreate to myDF
+myDF2 <- melt(myDF)
+str(myDF2)
+```
+
+4) Now write a simple function to analyze the data (probably as an ANOVA or regression analysis, but possibly as a logistic regression or contingency table analysis. Write another function to generate a useful graph of the data.
+```{r}
+ANOfun <- function(data=myDF2){
+  ANOanalysis <- aov(value~variable,data=data)
+  summary(ANOanalysis)  
+}
+ANOfun()
+
+# function to plot ANOVA
+ANOfunPlot <- function(data=myDF2){
+  ggdata <- ggplot(data=data,
+                   aes(x=variable,y=value,fill=variable)) + geom_boxplot() + xlab("Tillage") + ylab("tons/acre")
+  print(ggdata)
+}
+ANOfunPlot()
+
+```
+
+5 and 6) Try running your analysis multiple times to get a feeling for how variable the results are with the same parameters, but different sets of random numbers (adjusting the mean).
+```{r}
+# First time running the ANOVA analysis again 
+# using my "dataCreate" function from earlier but changing the means
+ANO2 <- melt(dataCreate(m1=60,m2=45)) # wider mean range, should be even more significant
+
+# calling on the function with the new means 
+ANOfun(data=ANO2) # still significant
+
+# plotting function with new means 
+ANOfunPlot(data = ANO2)
+```
+
+```{r}
+# Second time running the ANOVA analysis again 
+ANO3 <- melt(dataCreate(m1=30,m2=32)) # smaller mean range, shouldn't be significant 
+
+# calling on the function with the new means 
+ANOfun(data = ANO3) # not significant (p = 0.0512)
+
+# plotting function with new means 
+ANOfunPlot(data = ANO3)
+```
+
+7) Alternatively, for the effect sizes you originally hypothesized, what is the minimum sample size you would need in order to detect a statistically significant effect. Again, run the model a few times with the same parameter set to get a feeling for the effect of random variation in the data.
+```{r}
+funSize <-melt(dataCreate(n1=10,n2=10)) # starting with a small sample size 
+ANOfun(data = funSize) # becomes even more significant with smaller sampling size? 
+
+
+# second time running the function with a smaller sample size
+funSize2 <- melt(dataCreate(n1=6,n2=6))
+ANOfun(funSize2) # becomes less significant, but still so (p = 0.0126)
+
+#third time running the function with a smaller sample size
+funsize3 <- melt(dataCreate(n1=5,n2=5))
+ANOfun(funsize3) # still getting significant results
+
+#another time....
+funsize4 <- melt(dataCreate(n1=4,n2=4))
+ANOfun(funsize4) # not significant. Need a sample size > 5 
+```
+
+8) Based on the model, when the average of the crop yields for the two tillage treatments are too similar, the model no longer becomes significant, as would be expected. I saw this result when changing the means to 30 and 32 for no till and conventional till, respectively. Next, to test for the minimum sample size to still achieve significant results, I began with a sampling size of 10 for both tillage treatments (both treatments will always have the same sample size). This sample size of 10 gave highly signficant results (p = 0.000105). After several attempts to find a sample size that would produce an insiginificant model, I found that this was achieved with a sample size of 4. Moving forward, I would like to be able to run these models ~1000 times and have the p values recorded in order to see how often I will get significant results based on multiple runs. ("For loop" preulude.....) 
