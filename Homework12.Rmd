@@ -1,0 +1,33 @@
+---
+title: "Homework 12"
+author: "Kyle Dittmer"
+date: "4/14/2018"
+output: html_document
+---
+
+Play around with ggplot! Usuing my own corn yield (tons/acre) data set. 
+```{r}
+
+#preliminaries
+library(ggplot2)
+#file.choose()
+cropYield <- read.csv("/Users/kyledittmer/Desktop/BIO 381/Bio381_2018/BIO381_data.csv")
+
+# x-manure; y=tons/acre; year=size of the point
+m1 <- ggplot(data=cropYield,
+             mapping=aes(x=manure,y=tons.acre,size=Year)) + geom_point()
+print(m1)
+
+# same as above but in a boxplot 
+m1 <- ggplot(data=cropYield,mapping=aes(x=manure,y=tons.acre,)) + geom_boxplot()
+print(m1)
+
+# plotting with two categorical x-axis (manure and tillage) by year
+m1 <- ggplot(data=cropYield,
+             mapping=aes(x=tillage,y=tons.acre,group=manure,fill=manure)) + 
+  geom_bar(stat = "identity", width = 0.5, position="dodge") +
+  facet_grid(.~Year)
+print(m1)
+
+```
+
