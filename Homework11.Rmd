@@ -1,0 +1,149 @@
+---
+title: "Homework 11"
+author: "Kyle Dittmer"
+date: "4/4/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# preliminaries
+library(ggplot2)
+library(TeachingDemos)
+char2seed("Cruel April")
+
+# reading in my crop data 
+#file.choose()
+cornYield = read.csv("/Users/kyledittmer/Desktop/BIO 381/Bio381_2018/BIO381_data.csv")
+```
+
+1. Use the code from class as a template and analyze a function of your choosing that is relevant to your own research. Do not change any of the functions in the class code. Instead, copy and rename functions for your own project. Edit those copies, and then modify the lines of code in the main body of your program to call the new functions. If you do this carefully, you will be able to take full advantage of the existing program, but adapt it for your specific use.
+
+Yield (lbs/acre) = (100 – moisture) x (tons of grain) x (factor) divided by (row length in feet) divided by (row width in inches x number of rows)
+Mositure = 35%
+factor = 6149.64
+row length = 40 ft 
+row width = 240 cm
+```{r}
+##################################################
+# function: Yield (lbs/acre)
+# predicts crop yield 
+# input: A = observed corn yield (tons/acre)
+        # B = conversion factor for an ear of corn
+        # M = moisture
+        # R = row length (ft)
+        # W = row width (inches)
+# output: Y (corn yield)
+#------------------------------------------------- 
+Yield <-function(A=(cornYield)[,4],B=90.439,M=35,R=40,W=240){
+  Y <- (((100-M)*A*B)/R)/W
+  return(Y)
+}
+Yield() 
+
+# function to plot above function (simulated)
+yieldPlot <- function(A=(cornYield)[,4],B=90.439,M=35,R=40,W=240){
+  plot(data=cornYield,x=cornYield[,2],y=Yield(), ylab="corn yield (tons/acre)", xlab="maure application method")
+  return()
+}
+yieldPlot()
+ 
+
+
+```
+
+
+2. Similarly, use the code from yesterday’s class to design and conduct a randomization test for some of your own data. You will need to modify the functions that read in the data, calculate the metric, and randomize the data. Once those are set up, the program should run correctly calling your new functions. Also, to make your analysis fully repeatable, make sure you set the random number seed at the beginning (use either set.seed() in base R, or char2seed in the TeachingDemos package
+```{r}
+cornYield = read.csv("/Users/kyledittmer/Desktop/BIO 381/Bio381_2018/BIO381_data.csv")
+########################################################
+# FUNCTION: getMetric
+# calculate metric for randomization test
+# input: data frame
+# output: summary table for anova function
+#-------------------------------------------------------
+getMetric <- function(data=cornYield){
+  . <- aov(tons.acre~manure,data=data)
+  . <- summary.aov(.)
+  #. <- .$coefficients[1,4]
+  slope <- .
+  return(slope)
+}   
+getMetric()
+
+
+
+########################################################
+# function: shuffleData
+# randomize data for regression analysis
+# input: cornYield data frame
+# output: cornYield data frame with shuffled values in col. 4 
+#-------------------------------------------------------
+shuffleData <- function(data=cornYield){
+  cornYield[,4] <-sample(cornYield[,4])
+  return(cornYield)
+}
+shuffleData()
+
+
+########################################################
+# FUNCTION: getPVal
+# calculate p value for obserbed,simulated data 
+# input: list of observed metric and vector of simulated metric
+# output: lower, upper tail 
+#-------------------------------------------------------
+getPVal <- function(data=cornYield){
+  cornYield <- list(zObs=runif(1),xSim=runif(1000))
+  pLower <- mean(cornYield[[2]] <= cornYield[[1]])
+  pUpper <- mean(cornYield[[2]] >= cornYield[[1]])
+  return(c(pL=pLower,pU=pUpper))
+}
+getPVal()
+
+#---------------------------------
+# main body of code
+nSim <- 1000 # number of simulations 
+Xsim <- rep(NA,nSim) # will hold simulated slopes
+
+#dF <- readData()
+Xobs <- getMetric(cornYield)
+
+for(i in seq_len(nSim)){
+  Xsim[i] <- getMetric(shuffleData(cornYield)) }
+slopes <- list(Xobs,Xsim)
+getPVal(slopes)
+
+
+########################################################
+# FUNCTION: plotRanTest
+# graph 
+# input: list of observed metric and vector of simulated metric
+# output: ggplot graph 
+#-------------------------------------------------------
+
+plotRanTest <- function(z=NULL) {
+  if(is.null(z)) {
+  z <- list(zObs=runif(1),xSim=runif(1000)) } 
+  dF <- data.frame(ID=seq_along(z[[1]]),simX=z[[2]])
+  p1 <- ggplot(data=dF,mapping = aes(x=simX))
+  p1 + geom_histogram(mapping = aes(fill=I("goldenrod"),color=I("black"))) + 
+    geom_vline(aes(xintercept=z[[1]],col="blue"))
+}
+plotRanTest()
+
+```
+
+3. For comparison, calculate in R the standard statistical analysis you would use with these data. How does the p-value compare for the standard test versus the p value you estimated from your randomization test? If the p values seem very different, run the program again with a different starting seed (and/or increase the number of replications in your randomization test). If there are persistent differences in the p value of the standard test versus your randomization, what do you think is responsible for this difference?
+```{r}
+# anova for observed crop yield.   p = 0.127
+observedANO <- aov(tons.acre~manure,data=cornYield)
+summary(observedANO)
+
+# ANOVA for observed and shuffled crop yield.   p = 0.525
+shuffledANO <- aov(tons.acre~manure,data = shuffleData())
+summary(shuffledANO)
+```
+Neither the observed data nor the observed and shuffled data return significant results. However, the observed and shuffled p-value is much greater than the observed data, meaning that the null distribution cannot be rejected. 
