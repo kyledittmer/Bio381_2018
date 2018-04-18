@@ -67,12 +67,15 @@ cornYield = read.csv("/Users/kyledittmer/Desktop/BIO 381/Bio381_2018/BIO381_data
 #-------------------------------------------------------
 getMetric <- function(data=cornYield){
   . <- aov(tons.acre~manure,data=data)
-  . <- summary.aov(.)
-  #. <- .$coefficients[1,4]
+  . <- summary(.)[[1]][["Mean Sq"]][1] # weird code to extract mean squared value from anova
   slope <- .
   return(slope)
 }   
 getMetric()
+
+# another way to find the metric - going to use the sum of squares from summary though
+manureMean <- aggregate(cornYield$tons.acre,by=list(cornYield$manure),FUN=mean)
+var(manureMean$x)
 
 
 
@@ -142,7 +145,7 @@ plotRanTest()
 observedANO <- aov(tons.acre~manure,data=cornYield)
 summary(observedANO)
 
-# ANOVA for observed and shuffled crop yield.   p = 0.525
+# ANOVA for observed and shuffled crop yield. (p-value changes each time I run the code)
 shuffledANO <- aov(tons.acre~manure,data = shuffleData())
 summary(shuffledANO)
 ```

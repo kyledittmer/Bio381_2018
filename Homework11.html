@@ -176,15 +176,16 @@ yieldPlot()</code></pre>
 #-------------------------------------------------------
 getMetric &lt;- function(data=cornYield){
   . &lt;- aov(tons.acre~manure,data=data)
-  . &lt;- summary.aov(.)
-  #. &lt;- .$coefficients[1,4]
+  . &lt;- summary(.)[[1]][[&quot;Mean Sq&quot;]][1] # weird code to extract mean squared value from anova
   slope &lt;- .
   return(slope)
 }   
 getMetric()</code></pre>
-<pre><code>##             Df    Sum Sq  Mean Sq F value Pr(&gt;F)
-## manure       3 131789140 43929713   2.027  0.127
-## Residuals   36 780074349 21668732</code></pre>
+<pre><code>## [1] 43929713</code></pre>
+<pre class="r"><code># another way to find the metric - going to use the sum of squares from summary though
+manureMean &lt;- aggregate(cornYield$tons.acre,by=list(cornYield$manure),FUN=mean)
+var(manureMean$x)</code></pre>
+<pre><code>## [1] 4392971</code></pre>
 <pre class="r"><code>########################################################
 # function: shuffleData
 # randomize data for regression analysis
@@ -293,7 +294,7 @@ summary(observedANO)</code></pre>
 <pre><code>##             Df    Sum Sq  Mean Sq F value Pr(&gt;F)
 ## manure       3 131789140 43929713   2.027  0.127
 ## Residuals   36 780074349 21668732</code></pre>
-<pre class="r"><code># ANOVA for observed and shuffled crop yield.   p = 0.525
+<pre class="r"><code># ANOVA for observed and shuffled crop yield. (p-value changes each time I run the code)
 shuffledANO &lt;- aov(tons.acre~manure,data = shuffleData())
 summary(shuffledANO)</code></pre>
 <pre><code>##             Df    Sum Sq  Mean Sq F value Pr(&gt;F)
